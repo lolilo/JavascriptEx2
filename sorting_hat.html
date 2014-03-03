@@ -34,12 +34,19 @@
             Dumbledore's Army
         </div>
 
-<!-- How is this happening. --> 
+<!-- How is this happening. Bootstrap. It's Bootstrap. --> 
         <div class="form">
             <input type="number" id="student_count">
             <button id="set_student_count">Set Student Count</button>
             <div id="count">
             </div>
+        </div>
+
+        <div class="form">
+            <input type="text" id="student_name">
+            <button id="set_student_name">Student Name</button>
+<!--             <div id="count">
+            </div> -->
         </div>
 
     </div>
@@ -49,17 +56,16 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
+
     var studentCount = 0;
-    var button = document.getElementById("set_student_count");
+    var studentCountButton = document.getElementById("set_student_count");
     // spy on button by adding event listener
     // first argument is a string name of desired event, second argument is function
     // declare function in the event listener by writing idomatic javascript
     // idomatic = "Natural to the native speaker"
-    button.addEventListener("click", function(){
+    studentCountButton.addEventListener("click", function(){
         //get a variable that points to the div that has the count in it by using document.getElementById("count")
         var count_div = document.getElementById("count");
-        // console.log(count_div);
-
 
         //get value of the input box (document.getElementById("student_count").value) - save it to a variable. If it's blank, set it to 0.
         var student_count_value = document.getElementById("student_count").value;
@@ -76,10 +82,30 @@
         //reset the input box by changing the .value attribute to 0    
         document.getElementById("student_count").value = 0;    
 
-        // console.log(count_div.value)
-        // count_div.value = 0;
-
     });
+
+    var studentName;
+    // Take the value from the student name input field
+    var studentNameButton = document.getElementById("set_student_name");
+    studentNameButton.addEventListener("click", function(){
+        var studentName = document.getElementById("student_name").value
+        // console.log(studentName);
+    });
+
+    // house array...could also make this an object. Is a list an object? Blaahhh.
+    var Houses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin", "Dumbledore's Army"];
+    
+    // pick a house at random
+    // returns random number between min and max, inclusive
+    function getRandomInt (min, max) {
+    // Math.random() returns a Number between 0 (inclusive) and 1 (exclusive).
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var randomHouse = Houses[getRandomInt(0, Houses.length - 1)];
+    console.log(randomHouse);
+
+
     </script>
 
   </body>
