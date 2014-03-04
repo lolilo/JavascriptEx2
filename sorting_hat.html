@@ -44,7 +44,7 @@
 
         <div class="form">
             <input type="text" id="student_name">
-            <button id="set_student_name">Student Name</button>
+            <button id="set_student_name">Sort Student</button>
 <!--             <div id="count">
             </div> -->
         </div>
@@ -57,9 +57,10 @@
 
     <script type="text/javascript">
     
-    var House = function (name, currentResidents, studentHouseRatio, full) {
+    var House = function (name, studentHouseRatio) {
         this.houseName = name;
-        this.currentResidents = 0;
+        this.currentResidents = [];
+        this.numberOfResidents = 0;
         this.full = false;
         this.studentHouseRatio = studentHouseRatio;
 
@@ -67,7 +68,7 @@
         this.isFull = function() {
             // console.log(this.currentResidents);
             // console.log(studentHouseRatio);
-            if (this.currentResidents <= this.studentHouseRatio) {
+            if (this.numberOfResidents <= this.studentHouseRatio) {
                 return false
             }
             return true
@@ -91,23 +92,29 @@
             randomHouseKey = house_names[getRandomInt(0, house_names.length - 1)];
         }
 
-        // document.getElementsByClassName() returns an array of all child elements which have any of the given class names
-        all_elements = document.getElementsByClassName("form");
-        console.log(all_elements);
+        // TODO: document.getElementsByClassName() returns an array of all child elements which have any of the given class names
+        // all_elements = document.getElementsByClassName("form");
+        // var student_name_form = all_elements[1];
+        // console.log(all_elements);
+        // console.log(student_name_form);
+        // console.log(student_name_form.value);
 
+        houses[randomHouseKey].currentResidents.push(studentName);
+        console.log(houses[randomHouseKey].currentResidents);
     };
 
     // house array...could also make this an object. Is a list an object? Blaahhh.
     // var house_names = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin", "Dumbledore's Army"];
 
-    // This is better for debugging -- hard-coded strings that are mispelled won't throw helpful errors.
+    // This is better for debugging -- hard-coded strings that are mispelled won't throw helpful errors. 
+    // Actually, Liz says not to do this. Don't do this. Get freaking weird key errors. 
     var GRYFFINDOR = "Gryffindor";
     var HUFFLEPUFF = "Hufflepuff";
     var RAVENCLAW = "Ravenclaw";
     var SLYTHERIN = "Slytherin";
     var DUMBLEDORE = "Dumbledore's Army";
     var house_names = [GRYFFINDOR, HUFFLEPUFF, RAVENCLAW, SLYTHERIN, DUMBLEDORE];
-// TODO-- make this zero again when finished debuggin
+    // TODO-- make this zero again when finished debuggin
     var studentCount = 10;
     var studentHouseRatio = studentCount / house_names.length;
     var studentCountButton = document.getElementById("set_student_count");
@@ -133,7 +140,6 @@
 
         //reset the input box by changing the .value attribute to 0    
         document.getElementById("student_count").value = 0;    
-
     });
 
     var studentName;
@@ -143,14 +149,23 @@
         var studentName = document.getElementById("student_name").value
         // console.log(studentName);
         sortStudent(studentName, studentHouseRatio, houses);
+
+        console.log(houses);
+        console.log(Object.keys(houses));
+        // console.log(house_names);
+
+        for (var i = 0; i < Object.keys(houses).length; i++) {
+            console.log(i.currentResidents);
+        }
     });
 
     // create dictionary of houses
     var houses = {};
     for (var i = 0; i < house_names.length; i++) {
-        var house_name = house_names[i]
-        houses[house_name] = new House (house_name, 0, studentHouseRatio, false)
+        var house_name = house_names[i];
+        houses[house_name] = new House (house_name, studentHouseRatio);
     }
+    // console.log(houses);
 
     </script>
 
