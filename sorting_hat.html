@@ -56,8 +56,60 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
+    
+    var House = function (name, currentResidents, studentHouseRatio, full) {
+        this.houseName = name;
+        this.currentResidents = 0;
+        this.full = false;
+        this.studentHouseRatio = studentHouseRatio;
 
-    var studentCount = 0;
+        // check to see if house is "full" -- a house is not full if it has less than the number of students we're sorting divided by the number of Houses
+        this.isFull = function() {
+            // console.log(this.currentResidents);
+            // console.log(studentHouseRatio);
+            if (this.currentResidents <= this.studentHouseRatio) {
+                return false
+            }
+            return true
+        };
+    };
+
+    var sortStudent = function (studentName, studentHouseRatio, houses) {
+        // pick a house at random
+        // returns random number between min and max, inclusive
+        function getRandomInt (min, max) {
+            // Math.random() returns a Number between 0 (inclusive) and 1 (exclusive).
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        var randomHouseKey = house_names[getRandomInt(0, house_names.length - 1)];
+        // console.log(houses[randomHouseKey]);
+        // console.log(houses[randomHouseKey].isFull());
+
+        // if house is full, choose another random house
+        while (houses[randomHouseKey].isFull()) {
+            randomHouseKey = house_names[getRandomInt(0, house_names.length - 1)];
+        }
+
+        // document.getElementsByClassName() returns an array of all child elements which have any of the given class names
+        all_elements = document.getElementsByClassName("form");
+        console.log(all_elements);
+
+    };
+
+    // house array...could also make this an object. Is a list an object? Blaahhh.
+    // var house_names = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin", "Dumbledore's Army"];
+
+    // This is better for debugging -- hard-coded strings that are mispelled won't throw helpful errors.
+    var GRYFFINDOR = "Gryffindor";
+    var HUFFLEPUFF = "Hufflepuff";
+    var RAVENCLAW = "Ravenclaw";
+    var SLYTHERIN = "Slytherin";
+    var DUMBLEDORE = "Dumbledore's Army";
+    var house_names = [GRYFFINDOR, HUFFLEPUFF, RAVENCLAW, SLYTHERIN, DUMBLEDORE];
+// TODO-- make this zero again when finished debuggin
+    var studentCount = 10;
+    var studentHouseRatio = studentCount / house_names.length;
     var studentCountButton = document.getElementById("set_student_count");
     // spy on button by adding event listener
     // first argument is a string name of desired event, second argument is function
@@ -90,60 +142,15 @@
     studentNameButton.addEventListener("click", function(){
         var studentName = document.getElementById("student_name").value
         // console.log(studentName);
+        sortStudent(studentName, studentHouseRatio, houses);
     });
 
-    // house array...could also make this an object. Is a list an object? Blaahhh.
-    // var house_names = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin", "Dumbledore's Army"];
-
-    // This is better for debugging -- hard-coded strings that are mispelled won't throw helpful errors.
-    var GRYFFINDOR = "Gryffindor";
-    var HUFFLEPUFF = "Hufflepuff";
-    var RAVENCLAW = "Ravenclaw";
-    var SLYTHERIN = "Slytherin";
-    var DUMBLEDORE = "Dumbledore's Army";
-
-    var house_names = [GRYFFINDOR, HUFFLEPUFF, RAVENCLAW, SLYTHERIN, DUMBLEDORE];
-    
-    var House = function (name, current_residents, full) {
-        this.houseName = name;
-        this.current_residents = 0;
-        this.full = false;
-
-        // check to see if house is "full" -- a house is not full if it has less than the number of students we're sorting divided by the number of Houses
-        this.isFull = function() {
-            if (this.current_residents < studentCount/houses) {
-                return false
-            }
-            return true
-        }
-
-    }
-
+    // create dictionary of houses
     var houses = {};
     for (var i = 0; i < house_names.length; i++) {
         var house_name = house_names[i]
-        houses[house_name] = new House (house_name)
+        houses[house_name] = new House (house_name, 0, studentHouseRatio, false)
     }
-
-    // pick a house at random
-    // returns random number between min and max, inclusive
-    function getRandomInt (min, max) {
-        // Math.random() returns a Number between 0 (inclusive) and 1 (exclusive).
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    var randomHouseKey = house_names[getRandomInt(0, house_names.length - 1)];
-    console.log(houses[randomHouseKey]);
-    console.log(houses[randomHouseKey].isFull());
-
-    // while (houses[randomHouseKey].isFull()) {
-    //     randomHouseKey = house_names[getRandomInt(0, house_names.length - 1)];
-    // }
-
-    // // document.getElementsByClassName() returns an array of all child elements which have any of the given class names
-    // all_elements = document.getElementsByClassName();
-    // console.log(all_elements);
-
 
     </script>
 
