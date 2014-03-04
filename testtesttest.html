@@ -17,6 +17,12 @@
     <h1>Sorting Hat</h1>
     
     <div class="container">
+
+        <div class = "sorting_hat">
+            <center><img src="images/sorting_hat.jpg"></center>
+            <div id="student_sorted"> "I am the Sorting Hat." </div>
+        </div>
+
         <div class="form">
             <input type="number" id="student_count">
             <button id="set_student_count">Set Student Count</button>
@@ -25,7 +31,6 @@
         <div class="form">
             <input type="text" id="studentName">
             <button id="sort_student">Sort!</button>
-<!--             <div id="count"></div> -->
         </div>
         <div class="house col-md-2" id="Gryffindor">
             <h3>Gryffindor</h3>
@@ -108,7 +113,13 @@
             // Decrement the count of students from the count div.
             var countNode = document.getElementById("count");
             countNode.innerHTML = parseInt(countNode.innerHTML) - 1;
+
+            // display student's name al la: "Stella LeFevre: Gryffindor!!"
+            var quoteNode = document.getElementById("student_sorted");
+            // ASK: How can I format this easier/better like in Python, %s, %r? 
+            quoteNode.innerHTML = "\"" + studentName + ": " + houseName + "!" + "\"";
         });
+
     </script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
