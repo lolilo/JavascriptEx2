@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+
+<!-- We want to be able to start a timer
+The timer's length should be specified by an input box
+We should have an input box for washer length, and dryer length
+We should have a button that creates a new load of the specified type
+We want to be able to have multiple timers going
+We want to be able to watch the countdown of each timer update
+Once a timer is done, we want to indicate that it's finished somehow
+ -->
+
+
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1>Laundry Timers</h1>
+
+    <div class="form">
+        <input type="number" id="washer_time">
+        <button id="set_washer_time">New Washer Load</button>
+        <!-- <div id="count">  </div> -->
+    </div>
+
+    <div class="form">
+        <input type="number" id="dryer_time">
+        <button id="set_dyer_time">New Dryer Load</button>
+        <!-- <div id="count">  </div> -->
+    </div>
+
+    <table class="table" id="table">
+        <tr>
+            <th>Load Type</th>
+            <th>Time Remaining</th>
+        </tr>
+        <tr>
+            <td class="type">Washing Machine</td>
+            <td class="timer">09:11</td>
+        </tr>
+        <tr>
+            <td class="type">Washing Machine</td>
+            <td class="timer">12:33</td>
+        </tr>
+        <tr>
+            <td class="type">Dryer</td>
+            <td class="timer">54:44</td>
+        </tr>
+        <tr>
+            <td class="type">Dryer</td>
+            <td class="timer">00:01</td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+    function decrementTimers() {
+        var timerElements = document.getElementsByClassName("timer");
+        for (i = 0; i < timerElements.length; i++) {
+            timer = timerElements[i].innerHTML;
+            // console.log(timer);
+            var timeTokens = timer.split(":");
+            var minutes = timeTokens[0];
+            var seconds = timeTokens[1];
+
+            if (seconds > 0) {
+                seconds--;
+            } else {
+                minutes--;
+                seconds = 59;
+            }
+            // need to update HTML with new minutes and seconds
+            seconds = seconds.toString();
+            if (seconds.length==1) {
+                seconds = '0' + seconds.toString();
+            }
+           if (minutes.length==1) {
+                minutes = '0' + minutes.toString();
+            }
+            timer = minutes + ":" + seconds;
+            
+            // update the HTML
+            timerElements[i].innerHTML = timer;
+        }
+    }
+
+    // stop a timer once it reaches "00:00"
+    function stopTimer() {
+        var timerElements = document.getElementsByClassName("timer");
+        for (i=0; i<timerElements.length; i++) {
+            if (timerElements[i].innerHTML === "00:00") {
+                // I had "completed timer" here earlier, and getElementsByClassName("timer")
+                // still picked it up. Blah!
+                timerElements[i].className = "completed";
+            }
+        }
+    }
+
+
+    setInterval(function() {
+        decrementTimers();
+        stopTimer();
+    },1000)
+
+    </script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </body>
+</html>
